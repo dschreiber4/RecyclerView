@@ -1,25 +1,14 @@
 package edu.cvtc.dschreiber4.recyclerview;
 
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.View;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import edu.cvtc.dschreiber4.recyclerview.databinding.ActivityMainBinding;
-
 import android.view.Menu;
 import android.view.MenuItem;
-
 import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,13 +32,20 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
+            //Sets the fab button to add a word and scroll to its position in the recyclerView
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                int wordListSize = mWordList.size();
+                // Add a new word to the wordList.
+                mWordList.addLast("+ Word " + wordListSize);
+                // Notify the adapter, that the data has changed.
+                mRecyclerView.getAdapter().notifyItemInserted(wordListSize);
+                // Scroll to the bottom.
+                mRecyclerView.smoothScrollToPosition(wordListSize);
             }
         });
         //To create a list with "Word" being incremented with numbers when new added
+        //Add initial word to the list.
         for (int i = 0; i<20; i++) {
             mWordList.addLast("Word " + i);
         }
